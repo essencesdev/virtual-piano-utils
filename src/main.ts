@@ -100,7 +100,7 @@ function t(notes: string, steps: number): string {
 			if (newPos < 0 || newPos >= keys.length) {
 				throw new Error(
 					`detected key outside of range: ${key}` +
-						`, at position: ${i};${notes.slice(i - 3, i + 3)}`
+						`, at position: ${i};${notes.slice(i - 5, i + 5)}`
 				);
 			}
 			return keys[pos + steps];
@@ -120,7 +120,7 @@ transposeEle.addEventListener("click", () => {
 		const notes = inputEle.value;
 		const steps = parseInt(stepsEle.value, 10);
 		if (isNaN(steps)) {
-			throw new Error(`Invalid steps: ${stepsEle.value} - ${steps}`);
+			throw new Error(`Invalid steps: ${stepsEle.value}`);
 		}
 		const result = t(notes, steps);
 		outputEle.value = result;
