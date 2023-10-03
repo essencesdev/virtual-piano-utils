@@ -94,7 +94,7 @@ function t(notes: string, steps: number): string {
 	return notes
 		.split("")
 		.map((key, i) => {
-			const pos = keys.findIndex((note) => note === key);
+			const pos = keys.indexOf(key);
 			if (pos === -1) return key; // assume this is other notation
 			const newPos = pos + steps;
 			if (newPos < 0 || newPos >= keys.length) {
