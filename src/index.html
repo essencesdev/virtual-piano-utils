@@ -4,8 +4,33 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<link rel="stylesheet" href="/colors.css" />
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
+		<section id="container">
+			<section id="toolbar">
+				<button id="transpose">Transpose</button>
+				<label>
+					Halfsteps to shift by
+					<input id="shift" type="number" value="0" />
+				</label>
+				<span id="error"> </span>
+			</section>
+			<section id="notes">
+				<textarea
+					class="notes"
+					id="input"
+					placeholder="input notes"
+				></textarea>
+				<textarea
+					class="notes"
+					id="output"
+					placeholder="output notes"
+					disabled
+				></textarea>
+			</section>
+		</section>
+
 		<script type="module" src="main.js"></script>
 	</body>
 </html>
