@@ -93,9 +93,16 @@ function t(notes: string, steps: number): string {
 	// TODO: handle extended keys
 	return notes
 		.split("")
-		.map((key) => {
+		.map((key, i) => {
 			const pos = keys.findIndex((note) => note === key);
 			if (pos === -1) return key; // assume this is other notation
+			const newPos = pos + steps;
+			if (newPos < 0 || newPos >= keys.length) {
+				throw new Error(
+					`detected key outside of range: ${key}` +
+						`, at position: ${i};${notes.slice(i - 3, i + 3)}`
+				);
+			}
 			return keys[pos + steps];
 		})
 		.join("");
@@ -108,6 +115,7 @@ const outputEle = document.getElementById("output") as HTMLOutputElement;
 const errorEle = document.getElementById("error") as HTMLSpanElement;
 
 transposeEle.addEventListener("click", () => {
+	errorEle.innerText = "";
 	try {
 		const notes = inputEle.value;
 		const steps = parseInt(stepsEle.value, 10);
