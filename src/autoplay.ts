@@ -4,7 +4,7 @@ import { keys } from "./notes.js";
 // -9 is the offset of c3
 // we offset by a customizable amount of octaves because too low sounds bad
 const a4 = 440;
-const initialOffsetOctaves = 0;
+const initialOffsetOctaves = -1;
 const initialOffset = -9 + initialOffsetOctaves * 12;
 
 let audioContext = new AudioContext();
