@@ -1,19 +1,4 @@
 const keys = [
-	"{lft}",
-	"{LFT}",
-	"{rght}",
-	"{f1}",
-	"{F1}",
-	"{f2}",
-	"{F2}",
-	"{f3}",
-	"{f4}",
-	"{F4}",
-	"{f5}",
-	"{F5}",
-	"{f6}",
-	"{F6}",
-	"{f7}",
 	"1",
 	"!",
 	"2",
@@ -76,26 +61,28 @@ const keys = [
 	"n",
 	"m",
 	"M",
-	"{ins}",
-	"{INS}",
-	"{hom}",
-	"{pup}",
-	"{PUP}",
-	"{del}",
-	"{DEL}",
-	"{end}",
-	"{END}",
-	"{pdn}",
-	"{upa}",
 ];
+
+const transposeEle = document.getElementById("transpose") as HTMLButtonElement;
+const inputEle = document.getElementById("input") as HTMLTextAreaElement;
+const stepsEle = document.getElementById("shift") as HTMLInputElement;
+const outputEle = document.getElementById("output") as HTMLOutputElement;
+const errorEle = document.getElementById("error") as HTMLSpanElement;
 
 function t(notes: string, steps: number): string {
 	// TODO: handle extended keys
-	return notes
+	const transposedNotes = notes
 		.split("")
 		.map((key, i) => {
 			const pos = keys.indexOf(key);
-			if (pos === -1) return key; // assume this is other notation
+			if (pos === -1)
+				if (/[a-z]/i.test(key))
+					throw new Error(
+						`detected invalid key: ${key}` +
+							`, at position: ${i};${notes.slice(i - 5, i + 5)}`
+					);
+				else
+					return key; // probably a non-note symbol
 			const newPos = pos + steps;
 			if (newPos < 0 || newPos >= keys.length) {
 				throw new Error(
@@ -106,13 +93,35 @@ function t(notes: string, steps: number): string {
 			return keys[pos + steps];
 		})
 		.join("");
-}
 
-const transposeEle = document.getElementById("transpose") as HTMLButtonElement;
-const inputEle = document.getElementById("input") as HTMLTextAreaElement;
-const stepsEle = document.getElementById("shift") as HTMLInputElement;
-const outputEle = document.getElementById("output") as HTMLOutputElement;
-const errorEle = document.getElementById("error") as HTMLSpanElement;
+	// group the keys
+	return transposedNotes.replace(
+		/\[(.*?)\]/g,
+		(_, letters: string) =>
+			"[" +
+			letters
+				.split("")
+				.sort((a, b) => {
+					// symbol or upper
+					if (!/[0-9]/.test(a) && a.toUpperCase() === a) {
+						if (!/[0-9]/.test(b) && b.toUpperCase() === b) {
+							console.log(a, b, keys.indexOf(a), keys.indexOf(b));
+							return keys.indexOf(a) - keys.indexOf(b);
+						}
+						return -1;
+					}
+
+					// a is lower or number
+					// give b if not number or is upper
+					if (!/[0-9]/.test(b) && b.toUpperCase() === b) return 1;
+
+					// lower
+					return keys.indexOf(a) - keys.indexOf(b);
+				})
+				.join("") +
+			"]"
+	);
+}
 
 transposeEle.addEventListener("click", () => {
 	errorEle.innerText = "";
