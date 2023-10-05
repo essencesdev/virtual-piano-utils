@@ -68,6 +68,7 @@ const inputEle = document.getElementById("input") as HTMLTextAreaElement;
 const stepsEle = document.getElementById("shift") as HTMLInputElement;
 const outputEle = document.getElementById("output") as HTMLOutputElement;
 const errorEle = document.getElementById("error") as HTMLSpanElement;
+const autoshiftEle = document.getElementById("autoshift") as HTMLInputElement;
 
 function t(notes: string, steps: number): string {
 	// TODO: handle extended keys
@@ -81,16 +82,22 @@ function t(notes: string, steps: number): string {
 						`detected invalid key: ${key}` +
 							`, at position: ${i};${notes.slice(i - 5, i + 5)}`
 					);
-				else
-					return key; // probably a non-note symbol
-			const newPos = pos + steps;
+				else return key; // probably a non-note symbol
+			let newPos = pos + steps;
 			if (newPos < 0 || newPos >= keys.length) {
-				throw new Error(
-					`detected key outside of range: ${key}` +
-						`, at position: ${i};${notes.slice(i - 5, i + 5)}`
-				);
+				if (!autoshiftEle.checked)
+					throw new Error(
+						`detected key outside of range: ${key}` +
+							`, at position: ${i};${notes.slice(i - 5, i + 5)}`
+					);
+				else {
+					// must be able to divide somehow
+					while (newPos < 0 || newPos >= keys.length) {
+						newPos += 12 * (steps > 0 ? -1 : 1);
+					}
+				}
 			}
-			return keys[pos + steps];
+			return keys[newPos];
 		})
 		.join("");
 

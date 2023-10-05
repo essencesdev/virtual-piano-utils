@@ -16,7 +16,7 @@ section {
 }
 
 .notes {
-	width: 50%;
+	flex: 50%;
 }
 
 #toolbar {
