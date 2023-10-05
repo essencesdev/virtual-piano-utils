@@ -8,24 +8,37 @@ section {
 	gap: 12px;
 }
 
-#container {
+.container {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 	height: 100%;
+}
+
+.h-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.toolbar {
+	border: 1px solid black;
+	padding: 12px;
+}
+
+.toolbar > label {
+	display: block;
+}
+
+.toolbar > *:not(:last-child) {
+	margin-bottom: 12px;
+}
+
+.notes-container {
+	display: flex;
+	flex: 1;
 }
 
 .notes {
 	flex: 50%;
-}
-
-#toolbar {
-	display: flex;
-}
-
-#notes {
-	display: flex;
-	flex: 1;
 }
 
 #error {

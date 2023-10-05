@@ -1,67 +1,4 @@
-const keys = [
-	"1",
-	"!",
-	"2",
-	"@",
-	"3",
-	"4",
-	"$",
-	"5",
-	"%",
-	"6",
-	"^",
-	"7",
-	"8",
-	"*",
-	"9",
-	"(",
-	"0",
-	"q",
-	"Q",
-	"w",
-	"W",
-	"e",
-	"E",
-	"r",
-	"t",
-	"T",
-	"y",
-	"Y",
-	"u",
-	"i",
-	"I",
-	"o",
-	"O",
-	"p",
-	"P",
-	"a",
-	"s",
-	"S",
-	"d",
-	"D",
-	"f",
-	"g",
-	"G",
-	"h",
-	"H",
-	"j",
-	"J",
-	"k",
-	"l",
-	"L",
-	"z",
-	"Z",
-	"x",
-	"c",
-	"C",
-	"v",
-	"V",
-	"b",
-	"B",
-	"n",
-	"m",
-	"M",
-];
+import { keys } from "./notes.js";
 
 const transposeEle = document.getElementById("transpose") as HTMLButtonElement;
 const inputEle = document.getElementById("input") as HTMLTextAreaElement;
@@ -71,7 +8,6 @@ const errorEle = document.getElementById("error") as HTMLSpanElement;
 const autoshiftEle = document.getElementById("autoshift") as HTMLInputElement;
 
 function t(notes: string, steps: number): string {
-	// TODO: handle extended keys
 	const transposedNotes = notes
 		.split("")
 		.map((key, i) => {
@@ -83,20 +19,19 @@ function t(notes: string, steps: number): string {
 							`, at position: ${i};${notes.slice(i - 5, i + 5)}`
 					);
 				else return key; // probably a non-note symbol
+
 			let newPos = pos + steps;
 			if (newPos < 0 || newPos >= keys.length) {
-				if (!autoshiftEle.checked)
-					throw new Error(
-						`detected key outside of range: ${key}` +
-							`, at position: ${i};${notes.slice(i - 5, i + 5)}`
-					);
+				if (!autoshiftEle.checked) return "?";
 				else {
 					// must be able to divide somehow
+					// possible to create duplicates in chords
 					while (newPos < 0 || newPos >= keys.length) {
 						newPos += 12 * (steps > 0 ? -1 : 1);
 					}
 				}
 			}
+
 			return keys[newPos];
 		})
 		.join("");
@@ -106,8 +41,8 @@ function t(notes: string, steps: number): string {
 		/\[(.*?)\]/g,
 		(_, letters: string) =>
 			"[" +
-			letters
-				.split("")
+			// deduplicate things in chords that may be introduced by autoshift
+			Array.from(new Set(letters.split("")))
 				.sort((a, b) => {
 					// symbol or upper
 					if (!/[0-9]/.test(a) && a.toUpperCase() === a) {

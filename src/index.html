@@ -7,20 +7,38 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<section id="container">
-			<section id="toolbar">
-				<button id="transpose">Transpose</button>
-				<label>
-					Halfsteps to shift by
-					<input id="shift" type="number" value="0" />
-				</label>
-				<label>
-					Autoshift if outside of range
-					<input id="autoshift" type="checkbox" />
-				</label>
-				<span id="error"> </span>
+		<section class="container">
+			<section class="h-container">
+				<section class="toolbar">
+					<label title="Number of halfsteps to transpose by">
+						Halfsteps
+						<input id="shift" type="number" value="0" />
+					</label>
+					<label title="Shift note by octaves if outside of range">
+						Autoshift
+						<input id="autoshift" type="checkbox" />
+					</label>
+					<button id="transpose" title="Transpose">Transpose</button>
+				</section>
+				<section class="toolbar">
+					<label title="Base for consecutive non-chord notes">
+						Base delay
+						<input id="delay" type="number" value="100" />
+					</label>
+					<p
+						>Any non-note character except <br />for [ and ] will
+						add delay between notes</p
+					>
+					<button id="autoplay" title="Autoplay output"
+						>Autoplay</button
+					>
+					<button id="stopplay" title="Stop autoplaying">
+						Stop</button
+					>
+				</section>
 			</section>
-			<section id="notes">
+			<span id="error"> </span>
+			<section class="notes-container">
 				<textarea
 					class="notes"
 					id="input"
@@ -35,6 +53,8 @@
 			</section>
 		</section>
 
-		<script type="module" src="main.js"></script>
+		<script type="module" src="notes.js"></script>
+		<script type="module" src="transpose.js"></script>
+		<script type="module" src="autoplay.js"></script>
 	</body>
 </html>
