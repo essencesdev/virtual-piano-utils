@@ -47,7 +47,6 @@ function t(notes: string, steps: number): string {
 					// symbol or upper
 					if (!/[0-9]/.test(a) && a.toUpperCase() === a) {
 						if (!/[0-9]/.test(b) && b.toUpperCase() === b) {
-							console.log(a, b, keys.indexOf(a), keys.indexOf(b));
 							return keys.indexOf(a) - keys.indexOf(b);
 						}
 						return -1;
