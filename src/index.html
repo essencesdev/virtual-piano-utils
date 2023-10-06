@@ -32,9 +32,19 @@
 						[ and ] (even spaces and line breaks) <br />
 						will add delay between notes.
 					</p>
+					<label title="Volume">
+						Volume
+						<input
+							id="volume"
+							type="range"
+							min="0"
+							max="100"
+							value="10"
+						/>
+					</label>
 					<p>
 						<button id="autoplay" title="Autoplay output"
-							>Autoplay</button
+							>Play</button
 						>
 						<button id="stopplay" title="Stop autoplaying">
 							Stop</button
@@ -58,7 +68,6 @@
 			</section>
 		</section>
 
-		<script type="module" src="notes.js"></script>
 		<script type="module" src="transpose.js"></script>
 		<script type="module" src="autoplay.js"></script>
 	</body>

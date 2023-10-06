@@ -25,7 +25,9 @@ section {
 }
 
 .toolbar > label {
-	display: block;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .toolbar > *:not(:last-child) {

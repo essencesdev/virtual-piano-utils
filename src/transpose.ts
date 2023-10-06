@@ -1,14 +1,8 @@
 import { keys } from "./notes.js";
+import { tryThing } from "./shared.js";
 
-const transposeEle = document.getElementById("transpose") as HTMLButtonElement;
-const inputEle = document.getElementById("input") as HTMLTextAreaElement;
-const stepsEle = document.getElementById("shift") as HTMLInputElement;
-const outputEle = document.getElementById("output") as HTMLOutputElement;
-const errorEle = document.getElementById("error") as HTMLSpanElement;
-const autoshiftEle = document.getElementById("autoshift") as HTMLInputElement;
-
-function t(notes: string, steps: number): string {
-	const transposedNotes = notes
+function transpose(notes: string, steps: number): string {
+	return notes
 		.split("")
 		.map((key, i) => {
 			const pos = keys.indexOf(key);
@@ -35,9 +29,11 @@ function t(notes: string, steps: number): string {
 			return keys[newPos];
 		})
 		.join("");
+}
 
+function clean(notes: string) {
 	// group the keys
-	return transposedNotes.replace(
+	return notes.replace(
 		/\[(.*?)\]/g,
 		(_, letters: string) =>
 			"[" +
@@ -64,18 +60,20 @@ function t(notes: string, steps: number): string {
 	);
 }
 
+const transposeEle = document.getElementById("transpose") as HTMLButtonElement;
+const inputEle = document.getElementById("input") as HTMLTextAreaElement;
+const stepsEle = document.getElementById("shift") as HTMLInputElement;
+const outputEle = document.getElementById("output") as HTMLOutputElement;
+const autoshiftEle = document.getElementById("autoshift") as HTMLInputElement;
+
 transposeEle.addEventListener("click", () => {
-	errorEle.innerText = "";
-	try {
+	tryThing(() => {
 		const notes = inputEle.value;
 		const steps = parseInt(stepsEle.value, 10);
 		if (isNaN(steps)) {
 			throw new Error(`Invalid steps: ${stepsEle.value}`);
 		}
-		const result = t(notes, steps);
+		const result = clean(transpose(notes, steps));
 		outputEle.value = result;
-	} catch (e) {
-		console.error(e);
-		errorEle.innerText = String(e);
-	}
+	});
 });
