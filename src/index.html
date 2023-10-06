@@ -22,21 +22,24 @@
 				</section>
 				<section class="toolbar">
 					<label
-						title="Beats per minute for consecutive non-chord notes"
+						title="Half-beats per minute for consecutive non-chord notes"
 					>
-						BPM
+						hBPM
 						<input id="delay" type="number" value="300" />
 					</label>
-					<p
-						>Any non-note character except <br />for [ and ] will
-						add extra delay between notes</p
-					>
-					<button id="autoplay" title="Autoplay output"
-						>Autoplay</button
-					>
-					<button id="stopplay" title="Stop autoplaying">
-						Stop</button
-					>
+					<p>
+						Any non-note character except for <br />
+						[ and ] (even spaces and line breaks) <br />
+						will add delay between notes.
+					</p>
+					<p>
+						<button id="autoplay" title="Autoplay output"
+							>Autoplay</button
+						>
+						<button id="stopplay" title="Stop autoplaying">
+							Stop</button
+						>
+					</p>
 				</section>
 			</section>
 			<span id="error"> </span>
