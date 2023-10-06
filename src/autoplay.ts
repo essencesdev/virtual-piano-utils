@@ -32,13 +32,12 @@ function play(notes: string, baseDelay: number) {
 		}
 
 		const idx = keys.indexOf(note);
-		// unknown symbol, probably timing related, delay
-		if (idx === -1) {
-			delay += baseDelay;
-			continue;
+
+		// only play note if it's valid
+		if (idx !== -1) {
+			playNote(idx, delay, baseDelay * 1.1);
 		}
 
-		playNote(idx, delay, baseDelay * 1.1);
 		if (!inChord) {
 			delay += baseDelay;
 		}
