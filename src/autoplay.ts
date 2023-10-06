@@ -38,7 +38,7 @@ function play(notes: string, baseDelay: number) {
 			continue;
 		}
 
-		playNote(idx, delay, baseDelay);
+		playNote(idx, delay, baseDelay * 1.1);
 		if (!inChord) {
 			delay += baseDelay;
 		}
@@ -47,7 +47,7 @@ function play(notes: string, baseDelay: number) {
 
 function playNote(i: number, delay: number, playFor: number) {
 	const oscillator = audioContext.createOscillator();
-	oscillator.type = "sine";
+	oscillator.type = "triangle";
 	oscillator.connect(audioContext.destination);
 	oscillator.frequency.value = 2 ** ((initialOffset + i) / 12) * a4;
 	oscillator.start(audioContext.currentTime + delay / 1000);
@@ -58,7 +58,7 @@ autoplayEle.addEventListener("click", () => {
 	errorEle.innerText = "";
 	try {
 		const notes = inputEle.value;
-		const delay = parseInt(delayEle.value, 10);
+		const delay = 60000 / parseInt(delayEle.value, 10);
 		if (isNaN(delay)) {
 			throw new Error(`Invalid delay: ${delayEle.value}`);
 		}
