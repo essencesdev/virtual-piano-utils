@@ -30,6 +30,10 @@ section {
 	align-items: center;
 }
 
+.toolbar > label > * {
+	margin-left: 12px;
+}
+
 .toolbar > *:not(:last-child) {
 	margin-bottom: 12px;
 }
