@@ -26,6 +26,7 @@ function play(notes: string, baseDelay: number) {
 		}
 
 		if (note === "]") {
+			delay += baseDelay;
 			inChord = false;
 			continue;
 		}
