@@ -18,7 +18,7 @@ const errorEle = document.getElementById("error") as HTMLSpanElement;
 function play(notes: string, baseDelay: number) {
 	let delay = 0;
 	let inChord = false;
-	for (const note of notes.replace(/\n/g, "").split("")) {
+	for (const note of notes.split("")) {
 		// chord notation, don't delay but keep track
 		if (note === "[") {
 			inChord = true;
