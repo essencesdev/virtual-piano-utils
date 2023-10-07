@@ -60,5 +60,4 @@ export const keys = [
 	"B",
 	"n",
 	"m",
-	"M",
 ];
